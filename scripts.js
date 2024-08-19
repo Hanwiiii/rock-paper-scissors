@@ -11,3 +11,10 @@ const computerChoice = Math.floor(Math.random() * 3) + 1;
     }
 }
 console.log(getComputerChoice());
+
+function getHumanChoice () {
+    const humanChoice = prompt("What's your choice?");
+    return humanChoice; 
+}
+console.log(getHumanChoice());
+
