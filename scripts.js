@@ -21,30 +21,44 @@ function getHumanChoice() {
     return humanChoice; 
 }
 
-function playRound(humanChoice, computerChoice) {
+function playGame() {
+    // put constants here in order for it to generate a new value everytime the function is called
+    const humanSelection = getHumanChoice ();
+    const computerSelection = getComputerChoice ();
 
-    if (humanChoice === computerChoice)
-        return ("Try again! It's a tie.");
-    else if (humanChoice === "rock" && computerChoice === "scissors", ++humanScore)
-        return ("You win! Rock beats Scissors!");
-    else if (humanChoice === "rock" && computerChoice === "paper", ++computerScore)
-        return ("You lose! Paper beats Rock!");
-    else if (humanChoice === "paper" && computerChoice === "rock", ++humanScore)
-        return ("You win! Paper beats Rock!");
-    else if (humanChoice === "paper" && computerChoice === "scissors", ++computerScore)
-        return ("You lose! Scissors beats Paper!");
-    else if (humanChoice === "scissors" && computerChoice === "paper", ++humanScore)
-        return ("You win! Scissors beats Paper!");
-    else if (humanChoice === "scissors" && computerChoice === "rock", ++computerScore)
-        return ("You lose! Rock beats Scissors!");
-    else {
-        return "Invalid Choice";
+    function playRound(humanChoice, computerChoice) {
+
+        if (humanChoice === computerChoice)
+            return ("Try again! It's a tie.");
+        else if (humanChoice === "rock" && computerChoice === "scissors") {
+            ++humanScore;
+            return ("You win! Rock beats Scissors!");
+        } else if (humanChoice === "rock" && computerChoice === "paper") {
+            ++computerScore;
+            return ("You lose! Paper beats Rock!");
+        } else if (humanChoice === "paper" && computerChoice === "rock") {
+            ++humanScore; 
+            return ("You win! Paper beats Rock!");
+        } else if (humanChoice === "paper" && computerChoice === "scissors") {
+            ++computerScore;
+            return ("You lose! Scissors beats Paper!");
+        } else if (humanChoice === "scissors" && computerChoice === "paper") {
+            ++humanScore; 
+            return ("You win! Scissors beats Paper!");
+        } else if (humanChoice === "scissors" && computerChoice === "rock") {
+            ++computerScore;
+            return ("You lose! Rock beats Scissors!");
+        } else {
+            return "Invalid Choice";
+        }
     }
+// putting the console.log here makes it so that it calls from within the scope of playGame and not the global scope
+// original problem was that this portion was in the global scope and that for it to properly test it needed to be accessible
+// within the same scope as it will be calling from inside and not globally
+    console.log(playRound(humanSelection, computerSelection));
+    console.log("Your Score:" + humanScore);
+    console.log("Computer Score:" + computerScore);
 }
 
-const humanSelection = getHumanChoice ();
-const computerSelection = getComputerChoice ();
-
-console.log(playRound(humanSelection, computerSelection));
-console.log(humanScore);
-console.log(computerScore);
+// this just calls the function playGame(); 
+playGame();
