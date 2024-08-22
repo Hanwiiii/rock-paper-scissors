@@ -15,11 +15,13 @@ const computerChoice = Math.floor(Math.random() * 3);
         return "scissors"; 
     }
 }
+//console.log(getComputerChoice());
 
 function getHumanChoice() {
     const humanChoice = prompt("Choose Rock, Paper, or Scissors!").toLowerCase();
     return humanChoice; 
 }
+//console.log(getHumanChoice());
 
 function playGame() {
     // put constants here in order for it to generate a new value everytime the function is called
@@ -60,5 +62,7 @@ function playGame() {
     console.log("Computer Score:" + computerScore);
 }
 
-// this just calls the function playGame(); 
-playGame();
+// this loop lets you play against the computer five times, then it breaks after the 5th time
+for (let i = 0; i < 5; i++) {
+    playGame();
+}
