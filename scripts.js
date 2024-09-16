@@ -1,68 +1,96 @@
 let humanScore = 0;
 let computerScore = 0;
 
-// generate the number between 0-2 and assign the number to a choice of rock, paper, or scissors
-
 function getComputerChoice() {
-const computerChoice = Math.floor(Math.random() * 3); 
-    if (computerChoice === 0) {
+    const computerSelection = Math.floor(Math.random() * 3); 
+    if (computerSelection === 0) {
         return "rock"; 
     }
-    else if (computerChoice === 1) {
+    else if (computerSelection === 1) {
         return "paper"; 
     }
-    else if (computerChoice === 2) {
+    else if (computerSelection === 2) {
         return "scissors"; 
     }
 }
-//console.log(getComputerChoice());
 
-function getHumanChoice() {
-    const humanChoice = prompt("Choose Rock, Paper, or Scissors!").toLowerCase();
-    return humanChoice; 
+let playerChoice = "";
+
+function getPlayerChoice () {
+    const rockBtn = document.querySelector("#rock");
+    const paperBtn = document.querySelector("#paper");
+    const scissorsBtn = document.querySelector("#scissors");
+
+    rockBtn.addEventListener("click", () => {
+        playerChoice = "rock";
+        playRound(playerChoice, getComputerChoice());
+    })
+    paperBtn.addEventListener("click", () => {
+        playerChoice = "paper"
+        playRound(playerChoice, getComputerChoice());
+    })
+    scissorsBtn.addEventListener("click", () => {
+        playerChoice = "scissors"
+        playRound(playerChoice, getComputerChoice());
+    })
 }
-//console.log(getHumanChoice());
 
-function playGame() {
-    // put constants here in order for it to generate a new value everytime the function is called
-    const humanSelection = getHumanChoice ();
-    const computerSelection = getComputerChoice ();
-
-    function playRound(humanChoice, computerChoice) {
-
-        if (humanChoice === computerChoice)
-            return ("Try again! It's a tie.");
-        else if (humanChoice === "rock" && computerChoice === "scissors") {
-            ++humanScore;
-            return ("You win! Rock beats Scissors!");
-        } else if (humanChoice === "rock" && computerChoice === "paper") {
-            ++computerScore;
-            return ("You lose! Paper beats Rock!");
-        } else if (humanChoice === "paper" && computerChoice === "rock") {
-            ++humanScore; 
-            return ("You win! Paper beats Rock!");
-        } else if (humanChoice === "paper" && computerChoice === "scissors") {
-            ++computerScore;
-            return ("You lose! Scissors beats Paper!");
-        } else if (humanChoice === "scissors" && computerChoice === "paper") {
-            ++humanScore; 
-            return ("You win! Scissors beats Paper!");
-        } else if (humanChoice === "scissors" && computerChoice === "rock") {
-            ++computerScore;
-            return ("You lose! Rock beats Scissors!");
-        } else {
-            return "Invalid Choice";
-        }
+function playRound(playerChoice, computerChoice) {
+    let resultMessage = "";
+    if (playerChoice === computerChoice) {
+        resultMessage = "Try again! It's a tie.";
+    } else if (playerChoice === "rock" && computerChoice === "scissors" ||
+            playerChoice === "paper" && computerChoice === "rock" ||
+            playerChoice === "scissors" && computerChoice === "paper") {
+        ++humanScore;
+        resultMessage = "You win!";
+    } else if (playerChoice === "rock" && computerChoice === "paper" ||
+            playerChoice === "paper" && computerChoice === "scissors" ||
+            playerChoice === "scissors" && computerChoice === "rock") {
+        ++computerScore;
+        resultMessage = "You lose!";
+    } else {
+        resultMessage = "Invalid Choice";
     }
-// putting the console.log here makes it so that it calls from within the scope of playGame and not the global scope
-// original problem was that this portion was in the global scope and that for it to properly test it needed to be accessible
-// within the same scope as it will be calling from inside and not globally
-    console.log(playRound(humanSelection, computerSelection));
-    console.log("Your Score:" + humanScore);
-    console.log("Computer Score:" + computerScore);
+    for (let i = 0; i < 1; i++) {
+        winnerCheck();
+    }
+
+    const results = document.querySelector("#results");
+    results.textContent = resultMessage + ` Your score: ${humanScore} ` + `Computer score: ${computerScore}`;
+} 
+
+function winnerCheck () {
+    if (humanScore === 5) {
+        winner.textContent = "Congratulations, you have won!"
+    }
+    else if (computerScore === 5) {
+        winner.textContent = "The Computer wins, you lose!"
+    }
 }
 
-// this loop lets you play against the computer five times, then it breaks after the 5th time
-for (let i = 0; i < 5; i++) {
-    playGame();
-}
+const rockBtn = document.createElement("button");
+rockBtn.id = "rock";
+rockBtn.textContent = "Rock";
+document.body.appendChild(rockBtn);
+
+const paperBtn = document.createElement("button");
+paperBtn.id = "paper";
+paperBtn.textContent = "Paper";
+document.body.appendChild(paperBtn);
+
+const scissorsBtn = document.createElement("button");
+scissorsBtn.id = "scissors";
+scissorsBtn.textContent = "Scissors";
+document.body.appendChild(scissorsBtn);
+
+const resultsDiv = document.createElement("div");
+resultsDiv.id = "results";
+resultsDiv.textContent = "This is a best of Five, Choose your move!";
+document.body.appendChild(resultsDiv);
+
+const winner = document.createElement("div");
+winner.id = "winner";
+document.body.appendChild(winner);
+
+getPlayerChoice();
